@@ -12,7 +12,7 @@ const HOST = '0.0.0.0';
 const app = express();
 
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set('view engine', 'pug');
 
 const contentfulClient = contentful.createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -21,7 +21,7 @@ const contentfulClient = contentful.createClient({
 
 app.get('/', (req, res) => {
   return contentfulClient.getEntry(CONTENTFUL_HOME_ID)
-    .then(payload => res.render('pages/index', payload))
+    .then(payload => res.render('index', payload))
     .catch(error => console.log(error));
 });
 
@@ -32,7 +32,7 @@ app.get('/post/:slug', (req, res) => {
     'content_type': 'post',
     'fields.slug[match]': req.params.slug
   })
-    .then(payload => res.render('post/index', payload.items[0]))
+    .then(payload => res.render('post', payload.items[0]))
     .catch(error => console.log(error));
 });
 
