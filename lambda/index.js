@@ -21,6 +21,7 @@ app.set('views', path.join(process.cwd(), 'public', 'views'));
 app.set('view engine', 'pug');
 
 app.use('/', routes);
+app.use('/.netlify/functions/index', routes);
 
 module.exports = app;
 module.exports.handler = serverless(app);

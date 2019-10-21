@@ -8,6 +8,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const express = require('express');
 const serverless = require('serverless-http');
 const bodyParser = require('body-parser');
+const proxy = require('http-proxy-middleware');
 
 const routes = require('../routes');
 
@@ -39,6 +40,11 @@ app.use(webpackHotMiddleware(compiler, {
   log: console.log,
   path: '/__webpack_hmr',
   heartbeat: 10 * 1000
+}));
+
+app.use('/api', proxy({
+  target: 'http://localhost:9000',
+  changeOrigin: true
 }));
 
 app.use('/', routes);
