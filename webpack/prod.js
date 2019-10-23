@@ -29,7 +29,7 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin([
       {
-        from: 'src/views'
+        from: 'views'
       }
     ]),
     new CssExtractPlugin({

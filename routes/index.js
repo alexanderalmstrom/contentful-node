@@ -5,11 +5,6 @@ const router = express.Router();
 
 const contentful = require('../services/contentful');
 
-router.use('*', (req, res, next) => {
-  console.log('Someting is happening!');
-  next();
-});
-
 router.get('/', (req, res) => {
   contentful.getEntry(process.env.CONTENTFUL_HOME_ID)
     .then(payload => res.render('index', payload))

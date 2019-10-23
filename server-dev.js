@@ -13,11 +13,11 @@ const HOST = '0.0.0.0';
 
 const app = express();
 
-const routes = require('./config/routes');
-const commonConfig = require('./config/webpack/common');
-const devConfig = require('./config/webpack/dev');
+const routes = require('./routes');
+const commonConfig = require('./webpack/common');
+const devConfig = require('./webpack/dev');
 
-app.set('views', path.resolve(process.cwd(), 'src', 'views'));
+app.set('views', path.resolve(process.cwd(), 'views'));
 app.set('view engine', 'pug');
 
 // parse application/json
