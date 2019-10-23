@@ -1,5 +1,5 @@
 [build]
-  command = "yarn add pug-cli; node node_modules/pug-cli/index.js pug/ --out ./public"
+  command = "yarn add pug-cli; node node_modules/pug-cli/index.js views/ --out ./public"
   functions = "functions"
   publish = "public"
 
