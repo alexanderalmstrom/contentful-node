@@ -1,4 +1,4 @@
-const app = require('./config/server');
+const app = require('./server/dev');
 
 const PORT = 5000;
 const HOST = '0.0.0.0';

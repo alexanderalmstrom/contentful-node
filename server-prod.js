@@ -1,8 +1,10 @@
-const app = require('./lambda');
+const http = require('http');
 
-const PORT = 5000;
-const HOST = '0.0.0.0';
+const app = require('./server/prod');
+const server = http.createServer(app);
 
-app.listen(PORT, HOST);
+const PORT = 8080;
 
-console.log(`Listening on http://${HOST}:${PORT}`);
+server.listen(PORT, () => {
+  console.log("Listening on port %s", server.address().port);
+});
