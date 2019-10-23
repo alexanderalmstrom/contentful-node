@@ -6,7 +6,8 @@
     "start": "node server-dev.js",
     "build": "webpack --config config/webpack --mode=production",
     "server:dev": "node server-dev.js",
-    "server:prod": "node server-prod.js"
+    "server:prod": "node server-prod.js",
+    "heroku-postbuild": "yarn run build"
   },
   "dependencies": {
     "@babel/core": "^7.6.4",
