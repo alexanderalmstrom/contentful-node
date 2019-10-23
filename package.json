@@ -7,7 +7,7 @@
     "build": "webpack --config config/webpack --mode=production",
     "server": "node server-prod.js",
     "heroku-postbuild": "yarn run build",
-    "deploy": "yarn run deploy"
+    "deploy": "git push heroku master"
   },
   "dependencies": {
     "@babel/core": "^7.6.4",
