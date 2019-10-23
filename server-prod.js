@@ -1,10 +1,23 @@
-const http = require('http');
+const path = require('path');
+const express = require('express');
+const bodyParser = require('body-parser');
+const routes = require('./config/routes');
 
-const app = require('./server/prod');
-const server = http.createServer(app);
+const PORT = process.env.PORT || 5000;
 
-const PORT = 8080;
+const app = express();
 
-server.listen(PORT, () => {
-  console.log("Listening on port %s", server.address().port);
-});
+app.set('views', path.join(__dirname, 'public'));
+app.set('view engine', 'pug');
+
+// parse application/json
+app.use(bodyParser.json());
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', routes);
+
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
