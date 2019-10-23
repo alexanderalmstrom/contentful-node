@@ -3,31 +3,16 @@ const webpack = require('webpack');
 const CssExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin  = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ManifestPlugin = require('webpack-manifest-plugin');
+const RevReplacePlugin = require('./lib/RevReplacePlugin');
 
 module.exports = {
   mode: 'production',
 
   output: {
-    filename: '[name].[hash].js'
-  },
-
-  module: {
-    rules: [
-      {
-        test: /\.(css|scss)$/,
-        use: [
-          {
-            loader: CssExtractPlugin.loader
-          },
-          {
-            loader: 'css-loader'
-          },
-          {
-            loader: 'sass-loader'
-          }
-        ]
-      }
-    ]
+    filename: '[name].[hash].js',
+    chunkFilename: '[name].[chunkhash].js',
   },
 
   optimization: {
@@ -42,8 +27,24 @@ module.exports = {
   },
 
   plugins: [
+    new CopyWebpackPlugin([
+      {
+        from: 'src/views'
+      }
+    ]),
     new CssExtractPlugin({
-      filename: '[name].[hash].css'
+      filename: '[name].[hash].css',
+      chunkFilename: '[name].[chunkhash].css',
+    }),
+    new ManifestPlugin({
+      basePath: '/',
+      filter: (file) => file.isChunk
+    }),
+    new RevReplacePlugin({
+      manifest: path.resolve(process.cwd(), 'public', 'manifest.json'),
+      files: [
+        path.resolve(process.cwd(), 'public', 'layout.pug')
+      ]
     })
   ]
 };

@@ -1,11 +1,15 @@
 {
   "name": "contentful-node",
   "version": "1.0.0",
-  "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently \"netlify-lambda serve lambda\" \"node index.js\"",
-    "build": "concurrently \"netlify-lambda build lambda\" \"webpack --config config/webpack --mode=production\""
+    "start:lambda": "netlify-lambda serve lambda",
+    "start:webpack": "node server-dev.js",
+    "start": "NODE_ENV=development concurrently \"yarn run start:lambda\" \"yarn run start:webpack\"",
+    "build:lambda": "netlify-lambda build lambda",
+    "build:webpack": "webpack --config config/webpack --mode=production",
+    "build": "NODE_ENV=production concurrently \"yarn run build:lambda\" \"yarn run build:webpack\"",
+    "server": "node server-prod.js"
   },
   "dependencies": {
     "@babel/core": "^7.6.4",
@@ -21,6 +25,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "file-loader": "^4.2.0",
+    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
     "http-proxy-middleware": "^0.20.0",
     "mini-css-extract-plugin": "^0.8.0",
@@ -29,6 +34,7 @@
     "nodemon": "^1.19.4",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "pug": "^2.0.4",
+    "pug-html-loader": "^1.1.5",
     "pug-loader": "^2.4.0",
     "sass-loader": "^8.0.0",
     "serverless-http": "^2.3.0",

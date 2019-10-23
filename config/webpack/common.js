@@ -1,9 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const ManifestPlugin = require('webpack-manifest-plugin');
+const CssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
   entry: {
@@ -23,6 +21,25 @@ module.exports = {
         test: /\.js$/,
         exclude: /\node_modules/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.(css|scss)$/,
+        use: [
+          {
+            loader: process.env.NODE_ENV === 'production' ? CssExtractPlugin.loader : 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
+      },
+      {
+        test: /\.pug$/,
+        exclude: /\node_modules/,
+        loader: 'file-loader'
       }
     ]
   },
@@ -39,19 +56,11 @@ module.exports = {
 
   plugins: [
     new CleanWebpackPlugin(),
-    new ManifestPlugin({
-      filter: function (file) {
-        if (file.isChunk) return true;
-      }
-    }),
-    new HtmlWebpackPlugin({
-      template: 'src/views/layout.pug',
-      filename: 'layout.pug'
-    }),
-    new CopyWebpackPlugin([
-      {
-        from: 'src/views'
-      }
-    ])
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.CONTENTFUL_SPACE_ID': JSON.stringify(process.env.CONTENTFUL_SPACE_ID),
+      'process.env.CONTENTFUL_ACCESS_TOKEN': JSON.stringify(process.env.CONTENTFUL_ACCESS_TOKEN),
+      'process.env.CONTENTFUL_HOME_ID': JSON.stringify(process.env.CONTENTFUL_HOME_ID)
+    })
   ]
 };

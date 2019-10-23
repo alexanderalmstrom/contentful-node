@@ -15,9 +15,11 @@ const routes = require('../routes');
 const commonConfig = require('../webpack/common');
 const devConfig = require('../webpack/dev');
 
+const VIEWS_DIR = process.env.NODE_ENV === 'production' ? path.resolve(process.cwd(), 'public') : path.resolve(process.cwd(), 'src', 'views');
+
 const app = express();
 
-app.set('views', path.resolve(process.cwd(), 'public'));
+app.set('views', VIEWS_DIR);
 app.set('view engine', 'pug');
 
 // parse application/json
@@ -32,8 +34,7 @@ const webpackConfig =  merge(commonConfig, devConfig);
 const compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {
-  publicPath: webpackConfig.output.publicPath,
-  writeToDisk: true
+  publicPath: webpackConfig.output.publicPath
 }));
 
 app.use(webpackHotMiddleware(compiler, {

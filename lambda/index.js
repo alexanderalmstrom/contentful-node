@@ -9,6 +9,9 @@ const routes = require('../config/routes');
 
 const app = express();
 
+app.set('views', path.join(process.cwd(), 'public'));
+app.set('view engine', 'pug');
+
 // parse application/json
 app.use(bodyParser.json());
 
@@ -16,9 +19,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.resolve(process.cwd(), 'public')));
-
-app.set('views', path.join(process.cwd(), 'public', 'views'));
-app.set('view engine', 'pug');
 
 app.use('/', routes);
 app.use('/.netlify/functions/index', routes);
