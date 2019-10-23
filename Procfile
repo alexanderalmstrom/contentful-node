@@ -1,1 +1,1 @@
-web: yarn run server:prod
+web: yarn run server
