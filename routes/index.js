@@ -17,6 +17,8 @@ router.get('/:type/:slug', (req, res) => {
 
   const query = { 'content_type': type, 'fields.slug[match]': slug }
 
+  const column = ({ text }) => `<p>${text}</p>`;
+
   const renderEntry = ({ sys, fields }) => {
     const {
       contentType: {
@@ -26,11 +28,9 @@ router.get('/:type/:slug', (req, res) => {
       },
     } = sys;
 
-    const { text } = fields;
-
     switch(id) {
       case 'column':
-        return `<p>${text}</p>`;
+        return column(fields);
     }
   }
 
@@ -47,12 +47,8 @@ router.get('/:type/:slug', (req, res) => {
 
   const richTextOptions = {
     renderNode: {
-      [BLOCKS.EMBEDDED_ENTRY]: (node) => {
-        return renderEntry({ ...node.data.target });
-      },
-      [BLOCKS.EMBEDDED_ASSET]: (node) => {
-        return renderAsset({ ...node.data.target });
-      }
+      [BLOCKS.EMBEDDED_ENTRY]: (node) => renderEntry({ ...node.data.target }),
+      [BLOCKS.EMBEDDED_ASSET]: (node) => renderAsset({ ...node.data.target })
     }
   }
 
