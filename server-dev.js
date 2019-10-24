@@ -7,16 +7,13 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const routes = require('./routes');
+const webpackConfig = require('./webpack.config')({}, { mode: 'development' });
+
 const PORT = 5000;
 const HOST = '0.0.0.0';
 
 const app = express();
-
-const routes = require('./routes');
-const webpackConfig = require('./webpack.config')({}, { mode: 'development' });
-
-app.set('views', path.resolve(process.cwd(), 'views'));
-app.set('view engine', 'pug');
 
 // parse application/json
 app.use(bodyParser.json());
@@ -36,6 +33,9 @@ app.use(webpackDevMiddleware(compiler, {
 app.use(webpackHotMiddleware(compiler));
 
 app.use('/', routes);
+
+app.set('views', path.resolve(process.cwd(), 'views'));
+app.set('view engine', 'pug');
 
 app.listen(PORT, HOST);
 

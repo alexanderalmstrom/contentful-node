@@ -1,9 +1,9 @@
 const path = require('path');
 const express = require('express');
 
-const router = express.Router();
-
 const contentful = require('../services/contentful');
+
+const router = express.Router();
 
 router.get('/', (req, res) => {
   contentful.getEntry(process.env.CONTENTFUL_HOME_ID)
