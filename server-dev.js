@@ -37,6 +37,10 @@ app.use('/', routes);
 app.set('views', path.resolve(process.cwd(), 'views'));
 app.set('view engine', 'pug');
 
+app.use((err, req, res, next) => {
+  res.status(500).render('404', { error: err });
+});
+
 app.listen(PORT, HOST);
 
 console.log(`Listening on http://${HOST}:${PORT}`);

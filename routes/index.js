@@ -7,19 +7,16 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   contentful.getEntry(process.env.CONTENTFUL_HOME_ID)
-    .then(payload => res.render('index', payload))
-    .catch(error => console.log(error));
+    .then(payload => res.render('index', payload));
 });
 
 router.get('/:type/:slug', (req, res) => {
-  const query = {
-    'content_type': req.params.type,
-    'fields.slug[match]': req.params.slug
-  }
+  const { type, slug } = req.params;
+
+  const query = { 'content_type': type, 'fields.slug[match]': slug }
 
   contentful.getEntries(query)
-    .then(payload => res.render('post', payload.items[0]))
-    .catch(error => console.log(error));
+    .then(payload => res.render(type, payload.items[0]));
 });
 
 module.exports = router;

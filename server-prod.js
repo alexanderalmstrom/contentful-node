@@ -27,4 +27,8 @@ app.use('/', routes);
 app.set('views', path.join(__dirname, 'public'));
 app.set('view engine', 'pug');
 
+app.use((err, req, res, next) => {
+  res.status(500).render('404', { error: err });
+});
+
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

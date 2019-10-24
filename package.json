@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "node server-dev.js",
+    "start": "nodemon server-dev.js --ignore 'public/*'",
     "build": "webpack --mode=production",
     "server": "node server-prod.js",
     "heroku-postbuild": "yarn run build",
@@ -27,6 +27,7 @@
     "mini-css-extract-plugin": "^0.8.0",
     "netlify-lambda": "^1.6.3",
     "node-sass": "^4.12.0",
+    "nodemon": "^1.19.4",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
     "pug": "^2.0.4",
     "sass-loader": "^8.0.0",
