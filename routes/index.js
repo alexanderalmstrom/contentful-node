@@ -2,9 +2,8 @@ const path = require('path');
 const express = require('express');
 const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
 
-const { redisClient } = require('../services/redis');
 const contentful = require('../services/contentful');
-const { richTextOptions, cache } = require('../utils');
+const { cache, richTextOptions } = require('../utils');
 
 const router = express.Router();
 
