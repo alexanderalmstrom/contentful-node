@@ -6,8 +6,10 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session');
 const morgan = require('morgan');
 
+const store = require('./services/redis');
 const routes = require('./routes');
 const webpackConfig = require('./webpack.config')({}, { mode: 'development' });
 
@@ -26,6 +28,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(morgan('dev'));
+
+app.use(
+  session({
+    store,
+    secret: process.env.SESSION_SECRET || 'some secret',
+    resave: false
+  })
+);
 
 app.use(express.static(path.join(__dirname, 'public')));
 

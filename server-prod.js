@@ -32,7 +32,7 @@ app.use(morgan('combined'));
 app.use(
   session({
     store,
-    secret: 'panagora',
+    secret: process.env.SESSION_SECRET || 'some secret',
     resave: false
   })
 );

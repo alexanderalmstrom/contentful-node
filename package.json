@@ -5,7 +5,7 @@
   "scripts": {
     "start": "concurrently --kill-others \"redis-server\" \"nodemon server-dev.js --ignore 'public/*'\"",
     "build": "webpack --mode=production",
-    "server": "concurrently --kill-others \"redis-server\" \"node server-prod.js\"",
+    "server": "node server-prod.js",
     "heroku-postbuild": "yarn run build",
     "deploy": "git push heroku master"
   },
