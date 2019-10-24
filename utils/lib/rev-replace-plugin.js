@@ -1,11 +1,11 @@
 const path = require('path');
 const fs = require('fs');
 
-function RevPlugin (options) {
+function RevReplacePlugin (options) {
   this.options = options;
 }
 
-RevPlugin.prototype.apply = function (compiler) {
+RevReplacePlugin.prototype.apply = function (compiler) {
   const options = this.options;
 
   if (!options.manifest)
@@ -43,4 +43,4 @@ RevPlugin.prototype.apply = function (compiler) {
   });
 }
 
-module.exports = RevPlugin;
+module.exports = RevReplacePlugin;

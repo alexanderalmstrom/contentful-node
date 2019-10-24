@@ -8,7 +8,7 @@ const TerserPlugin  = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const RevReplacePlugin = require('./webpack/lib/RevReplacePlugin');
+const RevReplacePlugin = require('./utils').RevReplacePlugin;
 
 module.exports = (env, argv) => {
   // Common
