@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server-dev.js --ignore 'public/*'",
+    "start": "concurrently --kill-others \"redis-server\" \"nodemon server-dev.js --ignore 'public/*'\"",
     "build": "webpack --mode=production",
-    "server": "node server-prod.js",
+    "server": "concurrently --kill-others \"redis-server\" \"node server-prod.js\"",
     "heroku-postbuild": "yarn run build",
     "deploy": "git push heroku master"
   },
@@ -16,6 +16,7 @@
     "babel-loader": "^8.0.6",
     "body-parser": "^1.19.0",
     "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^5.0.0",
     "connect-redis": "^4.0.3",
     "contentful": "^7.10.0",
     "copy-webpack-plugin": "^5.0.4",
@@ -28,6 +29,7 @@
     "html-webpack-plugin": "^3.2.0",
     "http": "^0.0.0",
     "mini-css-extract-plugin": "^0.8.0",
+    "morgan": "^1.9.1",
     "netlify-lambda": "^1.6.3",
     "node-sass": "^4.12.0",
     "nodemon": "^1.19.4",
