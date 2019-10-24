@@ -11,3 +11,15 @@ Run developemnt server
 ```
 yarn run start
 ```
+
+Build for production
+
+```
+yarn run build
+```
+
+Deploy to Heroku app (connected with git remote)
+
+```
+yarn run deploy
+```
