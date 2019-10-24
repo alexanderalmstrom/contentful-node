@@ -13,7 +13,7 @@ const RevReplacePlugin = require('./webpack/lib/RevReplacePlugin');
 module.exports = (env, argv) => {
   // Common
   const common = {
-    mode: argv.mode,
+    mode: argv.mode || 'development',
 
     entry: {
       app: path.resolve(process.cwd(), 'src', 'index.js')
