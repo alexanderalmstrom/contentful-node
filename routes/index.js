@@ -47,8 +47,8 @@ router.get('/:type/:slug', (req, res) => {
 
   const richTextOptions = {
     renderNode: {
-      [BLOCKS.EMBEDDED_ENTRY]: (node) => renderEntry({ ...node.data.target }),
-      [BLOCKS.EMBEDDED_ASSET]: (node) => renderAsset({ ...node.data.target })
+      [BLOCKS.EMBEDDED_ENTRY]: ({ data }) => renderEntry({ ...data.target }),
+      [BLOCKS.EMBEDDED_ASSET]: ({ data }) => renderAsset({ ...data.target })
     }
   }
 
