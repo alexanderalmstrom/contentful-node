@@ -17,8 +17,6 @@ router.get('/:type/:slug', (req, res) => {
 
   const query = { 'content_type': type, 'fields.slug[match]': slug }
 
-  const column = ({ text }) => `<p>${text}</p>`;
-
   const renderEntry = ({ sys, fields }) => {
     const {
       contentType: {
@@ -33,6 +31,8 @@ router.get('/:type/:slug', (req, res) => {
         return column(fields);
     }
   }
+
+  const column = ({ text }) => `<p>${text}</p>`;
 
   const renderAsset = ({ fields }) => {
     const {
