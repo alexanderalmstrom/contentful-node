@@ -71,7 +71,8 @@ module.exports = (env, argv) => {
         'process.env.NODE_ENV': JSON.stringify(argv.mode),
         'process.env.CONTENTFUL_SPACE_ID': JSON.stringify(process.env.CONTENTFUL_SPACE_ID),
         'process.env.CONTENTFUL_ACCESS_TOKEN': JSON.stringify(process.env.CONTENTFUL_ACCESS_TOKEN),
-        'process.env.CONTENTFUL_HOME_ID': JSON.stringify(process.env.CONTENTFUL_HOME_ID)
+        'process.env.CONTENTFUL_HOME_ID': JSON.stringify(process.env.CONTENTFUL_HOME_ID),
+        'process.env.REDIS_URL': JSON.stringify(process.env.REDIS_URL)
       })
     ]
   }
