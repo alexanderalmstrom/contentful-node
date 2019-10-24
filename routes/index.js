@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const BLOCKS = require('@contentful/rich-text-types').BLOCKS;
 const renderRichText = require('@contentful/rich-text-html-renderer').documentToHtmlString;
 
 const contentful = require('../services/contentful');
@@ -16,8 +17,47 @@ router.get('/:type/:slug', (req, res) => {
 
   const query = { 'content_type': type, 'fields.slug[match]': slug }
 
+  const renderEntry = ({ sys, fields }) => {
+    const {
+      contentType: {
+        sys: {
+          id
+        }
+      },
+    } = sys;
+
+    const { text } = fields;
+
+    switch(id) {
+      case 'column':
+        return `<p>${text}</p>`;
+    }
+  }
+
+  const renderAsset = ({ fields }) => {
+    const {
+      title,
+      file: {
+        url
+      }
+    } = fields;
+
+    return `<img src="${url}" alt=${title} />`;
+  }
+
+  const richTextOptions = {
+    renderNode: {
+      [BLOCKS.EMBEDDED_ENTRY]: (node) => {
+        return renderEntry({ ...node.data.target });
+      },
+      [BLOCKS.EMBEDDED_ASSET]: (node) => {
+        return renderAsset({ ...node.data.target });
+      }
+    }
+  }
+
   contentful.getEntries(query)
-    .then(payload => res.render(type, { ...payload.items[0], renderRichText }));
+    .then(payload => res.render(type, { ...payload.items[0], renderRichText, richTextOptions }));
 });
 
 module.exports = router;
