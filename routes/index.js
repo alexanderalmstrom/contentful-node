@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
 
+const { redisClient } = require('../services/redis');
 const contentful = require('../services/contentful');
 const { richTextOptions } = require('../utils');
 
@@ -12,20 +13,33 @@ router.get('/', (req, res) => {
     .then(payload => res.render('index', payload));
 });
 
-router.get('/:type/:slug', (req, res) => {
-  const { type, slug } = req.params;
+router.get('/:content_type/:slug', (req, res) => {
+  const { content_type, slug } = req.params;
 
   const query = {
-    'content_type': type,
+    content_type,
     'fields.slug[match]': slug
   }
 
   contentful.getEntries(query)
-    .then(payload => res.render(type, {
-      ...payload.items[0],
-      documentToHtmlString,
-      richTextOptions
-    }));
+    .then(payload => {
+      const cacheKey = `${content_type}_${slug}`;
+      const responseValue = payload.items[0];
+
+      redisClient.get(cacheKey, (err, cacheValue) => {
+        const viewData = cacheValue ? JSON.parse(cacheValue) : responseValue;
+
+        res.render(content_type, {
+           ...viewData,
+          documentToHtmlString,
+          richTextOptions
+        });
+
+        if (!cacheValue) {
+          redisClient.set(cacheKey, JSON.stringify(responseValue));
+        }
+      });
+    });
 });
 
 module.exports = router;

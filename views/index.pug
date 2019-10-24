@@ -1,4 +1,10 @@
 extends layout
 
 block content
-  = fields.name
+  h1= fields.name
+
+  ul
+    li
+      a(href="/post/hello-world") Hello world!
+    li
+      a(href="/post/another-cool-article") Another cool article

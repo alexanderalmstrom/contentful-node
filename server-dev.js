@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const morgan = require('morgan');
 
-const store = require('./services/redis');
+const { redisStore } = require('./services/redis');
 const routes = require('./routes');
 const webpackConfig = require('./webpack.config')({}, { mode: 'development' });
 
@@ -31,7 +31,7 @@ app.use(morgan('dev'));
 
 app.use(
   session({
-    store,
+    redisStore,
     secret: process.env.SESSION_SECRET || 'some secret',
     resave: false
   })

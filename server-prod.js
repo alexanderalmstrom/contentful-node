@@ -9,7 +9,7 @@ const helmet = require('helmet');
 const session = require('express-session');
 const morgan = require('morgan');
 
-const store = require('./services/redis');
+const { redisStore } = require('./services/redis');
 const routes = require('./routes');
 
 const PORT = process.env.PORT || 5000;
@@ -31,7 +31,7 @@ app.use(morgan('combined'));
 
 app.use(
   session({
-    store,
+    redisStore,
     secret: process.env.SESSION_SECRET || 'some secret',
     resave: false
   })
