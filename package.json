@@ -4,7 +4,7 @@
   "license": "MIT",
   "scripts": {
     "start": "node server-dev.js",
-    "build": "webpack --config webpack --mode=production",
+    "build": "webpack --mode=production",
     "server": "node server-prod.js",
     "heroku-postbuild": "yarn run build",
     "deploy": "git push heroku master"

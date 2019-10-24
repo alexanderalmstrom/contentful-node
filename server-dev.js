@@ -2,7 +2,6 @@ require('dotenv').config();
 
 const path = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const express = require('express');
@@ -14,8 +13,7 @@ const HOST = '0.0.0.0';
 const app = express();
 
 const routes = require('./routes');
-const commonConfig = require('./webpack/common');
-const devConfig = require('./webpack/dev');
+const webpackConfig = require('./webpack.config')({}, { mode: 'development' });
 
 app.set('views', path.resolve(process.cwd(), 'views'));
 app.set('view engine', 'pug');
@@ -28,7 +26,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(express.static(path.resolve(process.cwd(), 'public')));
 
-const webpackConfig =  merge(commonConfig, devConfig);
 const compiler = webpack(webpackConfig);
 
 app.use(webpackDevMiddleware(compiler, {
