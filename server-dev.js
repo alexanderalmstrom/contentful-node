@@ -6,7 +6,10 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const morgan = require('morgan');
 
+const { redisStore } = require('./services/redis');
 const routes = require('./routes');
 const webpackConfig = require('./webpack.config')({}, { mode: 'development' });
 
@@ -15,13 +18,26 @@ const HOST = '0.0.0.0';
 
 const app = express();
 
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
 // parse application/json
 app.use(bodyParser.json());
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(express.static(path.resolve(process.cwd(), 'public')));
+app.use(morgan('dev'));
+
+app.use(
+  session({
+    redisStore,
+    secret: process.env.SESSION_SECRET || 'some secret',
+    resave: false
+  })
+);
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 const compiler = webpack(webpackConfig);
 
@@ -34,11 +50,10 @@ app.use(webpackHotMiddleware(compiler));
 
 app.use('/', routes);
 
-app.set('views', path.resolve(process.cwd(), 'views'));
-app.set('view engine', 'pug');
-
 app.use((err, req, res, next) => {
-  res.status(500).render('404', { error: err });
+  res.status(500).render('404', {
+    error: err
+  });
 });
 
 app.listen(PORT, HOST);

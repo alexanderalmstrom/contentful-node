@@ -1,9 +1,10 @@
 const path = require('path');
 const express = require('express');
-const BLOCKS = require('@contentful/rich-text-types').BLOCKS;
-const renderRichText = require('@contentful/rich-text-html-renderer').documentToHtmlString;
+const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
 
+const { redisClient } = require('../services/redis');
 const contentful = require('../services/contentful');
+const { richTextOptions, cache } = require('../utils');
 
 const router = express.Router();
 
@@ -12,48 +13,24 @@ router.get('/', (req, res) => {
     .then(payload => res.render('index', payload));
 });
 
-router.get('/:type/:slug', (req, res) => {
-  const { type, slug } = req.params;
+router.get('/:content_type/:slug', (req, res) => {
+  const { content_type, slug } = req.params;
 
-  const query = { 'content_type': type, 'fields.slug[match]': slug }
-
-  const renderEntry = ({ sys, fields }) => {
-    const {
-      contentType: {
-        sys: {
-          id
-        }
-      },
-    } = sys;
-
-    switch(id) {
-      case 'column':
-        return column(fields);
-    }
-  }
-
-  const column = ({ text }) => `<p>${text}</p>`;
-
-  const renderAsset = ({ fields }) => {
-    const {
-      title,
-      file: {
-        url
-      }
-    } = fields;
-
-    return `<img src="${url}" alt=${title} />`;
-  }
-
-  const richTextOptions = {
-    renderNode: {
-      [BLOCKS.EMBEDDED_ENTRY]: ({ data }) => renderEntry({ ...data.target }),
-      [BLOCKS.EMBEDDED_ASSET]: ({ data }) => renderAsset({ ...data.target })
-    }
+  const query = {
+    content_type,
+    'fields.slug[match]': slug
   }
 
   contentful.getEntries(query)
-    .then(payload => res.render(type, { ...payload.items[0], renderRichText, richTextOptions }));
+    .then(payload => {      
+      cache(`${content_type}_${slug}`, payload.items[0], (data) => {
+        res.render(content_type, {
+          ...data,
+          documentToHtmlString,
+          richTextOptions
+        });
+      });
+    });
 });
 
 module.exports = router;

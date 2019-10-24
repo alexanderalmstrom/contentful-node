@@ -1,5 +1,5 @@
 extends layout
 
 block content
-  = fields.name
-  != renderRichText(fields.content, richTextOptions)
+  h1= fields.name
+  != documentToHtmlString(fields.content, richTextOptions)

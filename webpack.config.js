@@ -8,7 +8,7 @@ const TerserPlugin  = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const RevReplacePlugin = require('./utils').RevReplacePlugin;
+const { RevReplacePlugin } = require('./utils');
 
 module.exports = (env, argv) => {
   // Common
@@ -68,10 +68,7 @@ module.exports = (env, argv) => {
     plugins: [
       new CleanWebpackPlugin(),
       new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(argv.mode),
-        'process.env.CONTENTFUL_SPACE_ID': JSON.stringify(process.env.CONTENTFUL_SPACE_ID),
-        'process.env.CONTENTFUL_ACCESS_TOKEN': JSON.stringify(process.env.CONTENTFUL_ACCESS_TOKEN),
-        'process.env.CONTENTFUL_HOME_ID': JSON.stringify(process.env.CONTENTFUL_HOME_ID)
+        'process.env.NODE_ENV': JSON.stringify(argv.mode)
       })
     ]
   }

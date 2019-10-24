@@ -1,5 +1,13 @@
-const RevReplacePlugin = require('./lib/rev-replace-plugin');
+const RevReplacePlugin = require('./rev-replace-plugin');
+const renderEntry = require('./render-entry');
+const renderAsset = require('./render-asset');
+const richTextOptions = require('./rich-text-options');
+const cache = require('./cache');
 
 module.exports = {
-  RevReplacePlugin: RevReplacePlugin
+  RevReplacePlugin,
+  renderEntry,
+  renderAsset,
+  richTextOptions,
+  cache
 }
