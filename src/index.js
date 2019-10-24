@@ -1,2 +1,2 @@
-import './stylesheets/app.scss';
-import './javascripts/app.js';
+import './stylesheets/main.scss';
+import './javascripts/main.js';

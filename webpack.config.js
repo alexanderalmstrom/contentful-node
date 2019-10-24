@@ -15,9 +15,9 @@ module.exports = (env, argv) => {
   const common = {
     mode: argv.mode || 'development',
 
-    entry: {
-      app: path.resolve(process.cwd(), 'src', 'index.js')
-    },
+    entry: [
+      path.resolve(process.cwd(), 'src', 'index.js')
+    ],
   
     output: {
       filename: '[name].js',
@@ -81,6 +81,7 @@ module.exports = (env, argv) => {
     devtool: 'eval-source-map',
 
     plugins: [
+      new webpack.HotModuleReplacementPlugin(),
       new WriteFilePlugin({
         test: /\.(pug|js|css|svg)$/
       })
@@ -129,6 +130,10 @@ module.exports = (env, argv) => {
         ]
       })
     ]
+  }
+
+  if (argv.mode !== 'production') {
+    common.entry.unshift('webpack-hot-middleware/client')
   }
 
   return merge(
