@@ -1,9 +1,9 @@
 const path = require('path');
 const express = require('express');
-const BLOCKS = require('@contentful/rich-text-types').BLOCKS;
-const renderRichText = require('@contentful/rich-text-html-renderer').documentToHtmlString;
+const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
 
 const contentful = require('../services/contentful');
+const { richTextOptions } = require('../utils');
 
 const router = express.Router();
 
@@ -15,45 +15,17 @@ router.get('/', (req, res) => {
 router.get('/:type/:slug', (req, res) => {
   const { type, slug } = req.params;
 
-  const query = { 'content_type': type, 'fields.slug[match]': slug }
-
-  const renderEntry = ({ sys, fields }) => {
-    const {
-      contentType: {
-        sys: {
-          id
-        }
-      },
-    } = sys;
-
-    switch(id) {
-      case 'column':
-        return column(fields);
-    }
-  }
-
-  const column = ({ text }) => `<p>${text}</p>`;
-
-  const renderAsset = ({ fields }) => {
-    const {
-      title,
-      file: {
-        url
-      }
-    } = fields;
-
-    return `<img src="${url}" alt=${title} />`;
-  }
-
-  const richTextOptions = {
-    renderNode: {
-      [BLOCKS.EMBEDDED_ENTRY]: ({ data }) => renderEntry({ ...data.target }),
-      [BLOCKS.EMBEDDED_ASSET]: ({ data }) => renderAsset({ ...data.target })
-    }
+  const query = {
+    'content_type': type,
+    'fields.slug[match]': slug
   }
 
   contentful.getEntries(query)
-    .then(payload => res.render(type, { ...payload.items[0], renderRichText, richTextOptions }));
+    .then(payload => res.render(type, {
+      ...payload.items[0],
+      documentToHtmlString,
+      richTextOptions
+    }));
 });
 
 module.exports = router;
