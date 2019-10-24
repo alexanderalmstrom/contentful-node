@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const renderRichText = require('@contentful/rich-text-html-renderer').documentToHtmlString;
 
 const contentful = require('../services/contentful');
 
@@ -16,7 +17,7 @@ router.get('/:type/:slug', (req, res) => {
   const query = { 'content_type': type, 'fields.slug[match]': slug }
 
   contentful.getEntries(query)
-    .then(payload => res.render(type, payload.items[0]));
+    .then(payload => res.render(type, { ...payload.items[0], renderRichText }));
 });
 
 module.exports = router;

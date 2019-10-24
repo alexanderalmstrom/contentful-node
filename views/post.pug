@@ -2,3 +2,4 @@ extends layout
 
 block content
   = fields.name
+  != renderRichText(fields.content)
