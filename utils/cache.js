@@ -8,7 +8,7 @@ const cache = (key, value, callback) => {
       redisClient.set(key, JSON.stringify(value));
     }
 
-    if (callback) callback(value);
+    if (typeof callback === 'function') callback(value);
   });
 }
 

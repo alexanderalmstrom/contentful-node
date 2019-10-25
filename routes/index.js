@@ -22,12 +22,8 @@ router.get('/:content_type/:slug', (req, res) => {
 
   contentful.getEntries(query)
     .then(payload => {      
-      cache(`${content_type}_${slug}`, payload.items[0], (data) => {
-        res.render(content_type, {
-          ...data,
-          documentToHtmlString,
-          richTextOptions
-        });
+      cache(slug, payload.items[0], (data) => {
+        res.render(content_type, { ...data, documentToHtmlString, richTextOptions });
       });
     });
 });
