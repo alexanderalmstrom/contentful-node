@@ -1,15 +1,17 @@
 const { redisClient } = require('../services/redis');
 
-const cache = (key, value, callback) => {
-  redisClient.get(key, (err, cacheValue) => {
-    if (cacheValue) {
-      value = JSON.parse(cacheValue);
-    } else {
-      redisClient.set(key, JSON.stringify(value));
-    }
+function setCache (key, data) {
+  redisClient.set(key, JSON.stringify(data));
+  return data;
+}
 
-    if (typeof callback === 'function') callback(value);
+function getCache (key, callback) {
+  return redisClient.get(key, (err, data) => {
+    if (callback) callback(JSON.parse(data));
   });
 }
 
-module.exports = cache;
+module.exports = {
+  setCache,
+  getCache
+};
