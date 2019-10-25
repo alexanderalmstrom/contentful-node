@@ -7,13 +7,15 @@ const { getCache, setCache, richTextOptions } = require('../utils');
 
 const router = express.Router();
 
-router.get('/', (req, res, next) => {
+const { CONTENTFUL_HOME_ID } = process.env;
+
+router.get('/', (req, res) => {
   const postsQuery = {
     'content_type': 'post',
     'limit': 1000
   }
 
-  const getPage = contentful.getEntry(process.env.CONTENTFUL_HOME_ID);
+  const getPage = contentful.getEntry(CONTENTFUL_HOME_ID);
   const getPosts = contentful.getEntries(postsQuery);
 
   Promise.all([getPage, getPosts]).then(([page, { items }]) => {
@@ -29,16 +31,16 @@ router.get('/:content_type/:slug', (req, res) => {
     'fields.slug[match]': slug
   }
 
-  function render (post) {
-    res.render(content_type, { ...post, documentToHtmlString, richTextOptions });
-  }
-
   if (getCache(slug)) {
     getCache(slug, (post) => render(post));
   } else {
     contentful.getEntries(singlePostQuery)
       .then(({ items }) => setCache(slug, items[0]))
       .then((post) => render(post));
+  }
+
+  function render (post) {
+    res.render(content_type, { ...post, documentToHtmlString, richTextOptions });
   }
 });
 
