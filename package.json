@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "nodemon server.js --ignore 'public/*'",
+    "start": "nodemon server.js",
     "build": "webpack --mode=production",
     "server": "NODE_ENV=production node server.js",
     "heroku-postbuild": "yarn run build",
