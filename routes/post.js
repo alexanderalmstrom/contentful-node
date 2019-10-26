@@ -6,11 +6,11 @@ const { getCache, setCache, richTextOptions } = require('../utils');
 
 const router = express.Router();
 
-router.get('/:content_type/:slug', (req, res) => {
-  const { content_type, slug } = req.params;
+router.get('/post/:slug', (req, res) => {
+  const { slug } = req.params;
 
   const singlePostQuery = {
-    content_type,
+    'content_type': 'post',
     'fields.slug[match]': slug
   }
 
@@ -23,7 +23,7 @@ router.get('/:content_type/:slug', (req, res) => {
   }
 
   function render (post) {
-    res.render(content_type, { ...post, documentToHtmlString, richTextOptions });
+    res.render('post', { ...post, documentToHtmlString, richTextOptions });
   }
 });
 
