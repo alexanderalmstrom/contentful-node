@@ -12,12 +12,13 @@ router.get('/', (req, res) => {
     'limit': 1000
   }
 
-  const getPage = contentful.getEntry(CONTENTFUL_HOME_ID);
-  const getPosts = contentful.getEntries(postsQuery);
-
-  Promise.all([getPage, getPosts]).then(([page, { items }]) => {
-    res.render('home', { page, posts: items });
-  });
+  Promise.all([
+    contentful.getEntry(CONTENTFUL_HOME_ID),
+    contentful.getEntries(postsQuery)]
+  )
+    .then(([page, { items }]) => {
+      res.render('home', { page, posts: items });
+    });
 });
 
 module.exports = router;
