@@ -1,13 +1,15 @@
 extends layout
 
 block content
-  .page
-    h1= page.fields.name
+  article.page
+    header.page__header
+      h1.page__title= page.fields.name
 
-    .post-list
-      each post in posts
-        .post-item
-          a.post-item__link(href='/post/' + post.fields.slug)
-            img.post-item__image(src=post.fields.image.fields.file.url + '?w=570&q=70&fm=webp')
-            .post-item__content
-              h2.post-item__title= post.fields.name
+    section.page__content
+      .post-list
+        each post in posts
+          .post-item
+            a.post-item__link(href='/post/' + post.fields.slug)
+              img.post-item__image(src=post.fields.image.fields.file.url + '?w=570&q=70&fm=webp')
+              .post-item__content
+                h2.post-item__title= post.fields.name

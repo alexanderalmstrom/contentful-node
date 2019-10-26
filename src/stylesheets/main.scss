@@ -73,7 +73,14 @@ p {
   text-decoration: none;
 }
 
-// Home
+// Page
+
+.page__header {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: $spacer * 2;
+  padding-bottom: $spacer * 2;
+}
 
 .post-list {
   width: 100%;
@@ -133,7 +140,7 @@ p {
 
 .post__header {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   padding-top: $spacer * 2;
   padding-bottom: $spacer * 2;
 }
