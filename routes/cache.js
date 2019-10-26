@@ -6,10 +6,7 @@ const router = express.Router();
 
 router.get('/clear-cache', async (req, res, next) => {
   const status = await redisClient.flushdb();
-
-  if (status === 'OK') {
-    res.send(status);
-  }
+  res.send(status);
 });
 
 router.get('/clear-cache/:slug', async (req, res, next) => {
