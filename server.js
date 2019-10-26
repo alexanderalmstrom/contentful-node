@@ -8,19 +8,39 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const morgan = require('morgan');
+const helmet = require('helmet');
 
 const { redisStore } = require('./services/redis');
 const { page, post, cache } = require('./routes');
 
-const webpackConfig = require('./webpack.config')({}, { mode: 'development' });
-
-const PORT = 5000;
-const HOST = '0.0.0.0';
-
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, app.get('env') == 'production' ? 'public' : 'views'));
 app.set('view engine', 'pug');
+
+// Development
+if (app.get('env') === 'development') {
+  const webpackConfig = require('./webpack.config')({}, 'development');
+
+  const compiler = webpack(webpackConfig);
+
+  app.use(webpackDevMiddleware(compiler, {
+    noInfo: true,
+    publicPath: webpackConfig.output.publicPath
+  }));
+
+  app.use(webpackHotMiddleware(compiler));
+
+  app.use(morgan('dev'));
+}
+
+// Production
+if (app.get('env') === 'production') {
+  app.use(helmet());
+
+  app.use(morgan('combined'));
+}
 
 // parse application/json
 app.use(bodyParser.json());
@@ -28,26 +48,19 @@ app.use(bodyParser.json());
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use(morgan('dev'));
-
 app.use(
   session({
     redisStore,
     secret: process.env.SESSION_SECRET || 'some secret',
-    resave: false
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: true
+    }
   })
 );
 
 app.use(express.static(path.join(__dirname, 'public')));
-
-const compiler = webpack(webpackConfig);
-
-app.use(webpackDevMiddleware(compiler, {
-  noInfo: true,
-  publicPath: webpackConfig.output.publicPath
-}));
-
-app.use(webpackHotMiddleware(compiler));
 
 app.use('/', page, post, cache);
 
@@ -57,6 +70,4 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, HOST);
-
-console.log(`Listening on http://${HOST}:${PORT}`);
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

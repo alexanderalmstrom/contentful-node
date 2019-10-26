@@ -4,8 +4,8 @@ block content
   .page
     h1= page.fields.name
 
-    ul.post-list
+    .post-list
       each post in posts
-        li.post-list__item
+        .post-list__item
           h2
             a(href='/post/' + post.fields.slug)= post.fields.name

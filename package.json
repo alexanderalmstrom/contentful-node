@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
-    "start": "concurrently --kill-others \"redis-server\" \"nodemon server-dev.js --ignore 'public/*'\"",
+    "start": "concurrently --kill-others \"redis-server\" \"nodemon server.js --ignore 'public/*'\"",
     "build": "webpack --mode=production",
-    "server": "node server-prod.js",
+    "server": "NODE_ENV=production node server.js",
     "heroku-postbuild": "yarn run build",
     "deploy": "git push heroku master"
   },

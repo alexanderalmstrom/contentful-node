@@ -13,7 +13,7 @@ const { RevReplacePlugin } = require('./utils');
 module.exports = (env, argv) => {
   // Common
   const common = {
-    mode: argv.mode || 'development',
+    mode: argv.mode,
 
     entry: [
       path.resolve(process.cwd(), 'src', 'index.js')
@@ -129,7 +129,7 @@ module.exports = (env, argv) => {
     ]
   }
 
-  if (argv.mode !== 'production') {
+  if (argv.mode == 'development') {
     common.entry.unshift('webpack-hot-middleware/client')
   }
 

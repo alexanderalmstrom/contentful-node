@@ -35,39 +35,39 @@ const renderEntryInline = ({ sys, fields }) => {
 }
 
 const columnBlock = ({ text }) => {
-  return (`
+  return `
     <div class="column__block">
       <p>${text}</p>
     </div>
-  `);
+  `;
 }
 
 const columnInline = ({ text }) => {
-  return (`
+  return `
     <div class="column__inline">
       <p>${text}</p>
     </div>
-  `);
+  `;
 }
 
 const postBlock = ( { contentType, slug, name } ) => {
-  return (`
+  return `
     <div class="post__block">
       <h2>
         <a href="/${contentType.sys.id}/${slug}">${name}</a>
       </h2>
     </div>
-  `)
+  `;
 }
 
 const postInline = ( { contentType, slug, name } ) => {
-  return (`
+  return `
     <div class="post__inline">
       <h2>
         <a href="/${contentType.sys.id}/${slug}">${name}</a>
       </h2>
     </div>
-  `)
+  `;
 }
 
 module.exports = {
