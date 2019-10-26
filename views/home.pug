@@ -6,6 +6,8 @@ block content
 
     .post-list
       each post in posts
-        .post-list__item
-          h2
-            a(href='/post/' + post.fields.slug)= post.fields.name
+        .post-item
+          a.post-item__link(href='/post/' + post.fields.slug)
+            img.post-item__image(src=post.fields.image.fields.file.url + '?w=570&q=70&fm=webp')
+            .post-item__content
+              h2.post-item__title= post.fields.name

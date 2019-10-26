@@ -47,7 +47,7 @@ const asset = ({ fields }) => {
     }
   } = fields;
 
-  return `<img src="${url}?w=960&q=70&fm=webp" alt=${title} />`;
+  return `<img src="${url}?w=1170&q=70&fm=webp" alt=${title} />`;
 }
 
 const richTextOptions = {
