@@ -10,7 +10,7 @@ const session = require('express-session');
 const morgan = require('morgan');
 
 const { redisStore } = require('./services/redis');
-const routes = require('./routes');
+const { post, page, cache } = require('./routes');
 
 const PORT = process.env.PORT || 5000;
 
@@ -39,7 +39,7 @@ app.use(
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
+app.use('/', cache, page, post);
 
 app.use((err, req, res, next) => {
   res.status(500).render('404', {

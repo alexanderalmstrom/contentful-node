@@ -6,7 +6,7 @@ function setCache (key, data) {
 }
 
 function getCache (key, callback) {
-  return redisClient.get(key, (err, data) => {
+  redisClient.get(key, (err, data) => {
     if (callback) callback(JSON.parse(data));
   });
 }
