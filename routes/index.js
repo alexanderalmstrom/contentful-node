@@ -1,9 +1,9 @@
-const post = require('./post');
 const page = require('./page');
+const post = require('./post');
 const cache = require('./cache');
 
 module.exports = {
-  post,
   page,
+  post,
   cache
 }

@@ -1,17 +1,17 @@
 const { redisClient } = require('../services/redis');
 
-function setCache (key, data) {
-  redisClient.set(key, JSON.stringify(data));
-  return data;
+const cache = async (key, promise) => {
+  const payload = await Promise.resolve(promise).then(payload => payload);
+  const value = await redisClient.get(key);
+
+  if (value) {
+    console.log(`GET CACHE: ${key}`);
+    return JSON.parse(value);
+  } else {
+    console.log(`SET CACHE: ${key}`);
+    await redisClient.set(key, JSON.stringify(payload));
+    return payload;
+  }
 }
 
-function getCache (key, callback) {
-  redisClient.get(key, (err, data) => {
-    if (callback) callback(JSON.parse(data));
-  });
-}
-
-module.exports = {
-  setCache,
-  getCache
-};
+module.exports = cache;

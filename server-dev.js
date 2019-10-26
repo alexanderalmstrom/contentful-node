@@ -10,7 +10,7 @@ const session = require('express-session');
 const morgan = require('morgan');
 
 const { redisStore } = require('./services/redis');
-const { post, page, cache } = require('./routes');
+const { page, post, cache } = require('./routes');
 
 const webpackConfig = require('./webpack.config')({}, { mode: 'development' });
 
@@ -49,7 +49,7 @@ app.use(webpackDevMiddleware(compiler, {
 
 app.use(webpackHotMiddleware(compiler));
 
-app.use('/', cache, page, post);
+app.use('/', page, post, cache);
 
 app.use((err, req, res, next) => {
   res.status(500).render('404', {
