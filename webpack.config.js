@@ -129,7 +129,9 @@ module.exports = (env, argv) => {
     ]
   }
 
-  if (argv.mode == 'development') {
+  console.log(argv.mode);
+
+  if (argv.mode === 'development') {
     common.entry.unshift('webpack-hot-middleware/client')
   }
 

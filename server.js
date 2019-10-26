@@ -21,7 +21,7 @@ app.set('view engine', 'pug');
 
 // Development
 if (app.get('env') === 'development') {
-  const webpackConfig = require('./webpack.config')({}, 'development');
+  const webpackConfig = require('./webpack.config')({}, { mode: 'development' });
 
   const compiler = webpack(webpackConfig);
 
