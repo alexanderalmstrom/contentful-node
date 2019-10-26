@@ -1,4 +1,4 @@
-const richTextOptions = require('./rich-text-options');
+const { richTextOptions } = require('./rich-text');
 const cache = require('./cache');
 
 module.exports = {
