@@ -11,9 +11,9 @@ const renderEntryBlock = ({ sys, fields }) => {
 
   switch(id) {
     case 'column':
-      return columnBlock({ ...sys, ...fields });
+      return columnBlock({ ...fields });
     case 'post':
-      return postBlock({ ...sys, ...fields });
+      return postBlock({...fields });
   }
 }
 
@@ -28,16 +28,16 @@ const renderEntryInline = ({ sys, fields }) => {
 
   switch(id) {
     case 'column':
-      return columnInline({ ...sys, ...fields });
+      return columnInline({ ...fields });
     case 'post':
-      return postInline({ ...sys, ...fields });
+      return postInline({ ...fields });
   }
 }
 
-const columnBlock = ({ text }) => {
+const columnBlock = ({ text }) => {  
   return `
     <div class="column__block">
-      <p>${text}</p>
+      ${text}
     </div>
   `;
 }
@@ -45,26 +45,26 @@ const columnBlock = ({ text }) => {
 const columnInline = ({ text }) => {
   return `
     <div class="column__inline">
-      <p>${text}</p>
+      ${text}
     </div>
   `;
 }
 
-const postBlock = ( { contentType, slug, name } ) => {
+const postBlock = ( { slug, name } ) => {
   return `
     <div class="post__block">
       <h2>
-        <a href="/${contentType.sys.id}/${slug}">${name}</a>
+        <a href="/post/${slug}">${name}</a>
       </h2>
     </div>
   `;
 }
 
-const postInline = ( { contentType, slug, name } ) => {
+const postInline = ( { slug, name } ) => {
   return `
     <div class="post__inline">
       <h2>
-        <a href="/${contentType.sys.id}/${slug}">${name}</a>
+        <a href="/post/${slug}">${name}</a>
       </h2>
     </div>
   `;
