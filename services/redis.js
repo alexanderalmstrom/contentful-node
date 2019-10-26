@@ -1,12 +1,11 @@
+if (!process.env.REDIS_URL) return;
+
 const redis = require('redis');
 const session = require('express-session');
 const ConnectRedis = require('connect-redis')(session);
 const asyncRedis = require('async-redis');
 
-const redisClient = redis.createClient(process.env.REDIS_URL || {
-  host: 'localhost',
-  port: 6379
-});
+const redisClient = redis.createClient(process.env.REDIS_URL);
 
 redisClient.unref();
 redisClient.on('error', console.log);
