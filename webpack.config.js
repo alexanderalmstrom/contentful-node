@@ -8,7 +8,7 @@ const TerserPlugin  = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
-const { RevReplacePlugin } = require('./utils');
+const RevReplacePlugin = require('./lib/rev-replace-plugin');
 
 module.exports = (env, argv) => {
   // Common
@@ -128,8 +128,6 @@ module.exports = (env, argv) => {
       })
     ]
   }
-
-  console.log(argv.mode);
 
   if (argv.mode === 'development') {
     common.entry.unshift('webpack-hot-middleware/client')

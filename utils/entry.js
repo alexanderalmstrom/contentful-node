@@ -1,6 +1,6 @@
 const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
 
-const renderEntryBlock = ({ sys, fields }) => {
+const renderEntry = ({ sys, fields, inline }) => {
   const {
     contentType: {
       sys: {
@@ -11,48 +11,27 @@ const renderEntryBlock = ({ sys, fields }) => {
 
   switch(id) {
     case 'column':
-      return columnBlock({ ...fields });
+      return column({ ...fields, inline });
     case 'post':
-      return postBlock({...fields });
+      return post({...fields, inline });
   }
 }
 
-const renderEntryInline = ({ sys, fields }) => {
-  const {
-    contentType: {
-      sys: {
-        id
-      }
-    },
-  } = sys;
-
-  switch(id) {
-    case 'column':
-      return columnInline({ ...fields });
-    case 'post':
-      return postInline({ ...fields });
-  }
-}
-
-const columnBlock = ({ text }) => {  
+const column = ({ text, inline }) => { 
+  const className = inline ? 'column__inline' : 'column__block';
+  
   return `
-    <div class="column__block">
+    <div class="${className}">
       ${text}
     </div>
   `;
 }
 
-const columnInline = ({ text }) => {
-  return `
-    <div class="column__inline">
-      ${text}
-    </div>
-  `;
-}
+const post = ( { slug, name, inline } ) => {
+  const className = inline ? 'post__inline' : 'post__block';
 
-const postBlock = ( { slug, name } ) => {
   return `
-    <div class="post__block">
+    <div class="${className}">
       <h2>
         <a href="/post/${slug}">${name}</a>
       </h2>
@@ -60,17 +39,4 @@ const postBlock = ( { slug, name } ) => {
   `;
 }
 
-const postInline = ( { slug, name } ) => {
-  return `
-    <div class="post__inline">
-      <h2>
-        <a href="/post/${slug}">${name}</a>
-      </h2>
-    </div>
-  `;
-}
-
-module.exports = {
-  renderEntryBlock,
-  renderEntryInline
-};
+module.exports = renderEntry;

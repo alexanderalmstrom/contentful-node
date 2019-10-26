@@ -6,9 +6,7 @@ const renderAsset = ({ fields }) => {
     }
   } = fields;
 
-  return `<img src="${url}" alt=${title} />`;
+  return `<img src="${url}?w=960&q=70&fm=webp" alt=${title} />`;
 }
-
-const column = ({ text }) => `<p>${text}</p>`;
 
 module.exports = renderAsset;
