@@ -1,5 +1,6 @@
 extends layout
 
 block content
-  h1= post.fields.name
-  != documentToHtmlString(post.fields.content, richTextOptions)
+  .post
+    h1= post.fields.name
+    != documentToHtmlString(post.fields.content, richTextOptions)

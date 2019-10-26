@@ -1,10 +1,11 @@
 extends layout
 
 block content
-  h1= page.fields.name
+  .page
+    h1= page.fields.name
 
-  ul
-    each post in posts
-      li
-        h2
-        a(href='/post/' + post.fields.slug)= post.fields.name
+    ul.post-list
+      each post in posts
+        li.post-list__item
+          h2
+            a(href='/post/' + post.fields.slug)= post.fields.name

@@ -1,11 +1,12 @@
-const { BLOCKS } = require('@contentful/rich-text-types');
+const { BLOCKS, INLINES } = require('@contentful/rich-text-types');
 
-const renderEntry = require('./render-entry');
-const renderAsset = require('./render-asset');
+const { renderEntryBlock, renderEntryInline } = require('./entry');
+const renderAsset = require('./asset');
 
 const richTextOptions = {
   renderNode: {
-    [BLOCKS.EMBEDDED_ENTRY]: ({ data }) => renderEntry({ ...data.target }),
+    [BLOCKS.EMBEDDED_ENTRY]: ({ data }) => renderEntryBlock({ ...data.target }),
+    [INLINES.EMBEDDED_ENTRY]: ({ data }) => renderEntryInline({ ...data.target }),
     [BLOCKS.EMBEDDED_ASSET]: ({ data }) => renderAsset({ ...data.target })
   }
 }
