@@ -1,0 +1,12 @@
+mixin img(src, alt, params)
+  if params.length
+    - params.unshift('&')
+
+  - var imgQuery = params.join('&')
+  - var webpSrc = src + '?q=70&fm=webp' + imgQuery
+  - var jpgSrc = src + '?q=70&fm=jpg' + imgQuery
+
+  picture(class!=attributes.class)
+    source(type="image/webp" srcset=webpSrc)
+    source(type="image/jpeg" srcset=jpgSrc)
+    img(src=jpgSrc alt=alt loading="lazy")

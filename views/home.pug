@@ -1,5 +1,7 @@
 extends layout
 
+include mixins
+
 block content
   article.page
     header.page__header
@@ -10,9 +12,6 @@ block content
         each post in posts
           .post-item
             a.post-item__link(href='/post/' + post.fields.slug)
-              picture.post-item__image
-                source(type="image/webp" srcset=post.fields.image.fields.file.url + '?w=570&q=70&fm=webp')
-                source(type="image/jpeg" srcset=post.fields.image.fields.file.url + '?w=570&q=70&fm=jpg')
-                img(src=post.fields.image.fields.file.url + '?w=570&q=70&fm=jpg' alt=post.fields.image.fields.title loading="lazy")
+              +img(post.fields.image.fields.file.url, post.fields.image.fields.title, ['w=570'])(class="post-item__image")
               .post-item__content
                 h2.post-item__title= post.fields.name
