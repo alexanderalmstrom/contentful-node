@@ -6,7 +6,12 @@ const router = express.Router();
 
 router.get('/clear-cache', async (req, res, next) => {
   const status = await redisClient.flushdb();
-  res.send(status);
+
+  if (status === 'OK') {
+    res.send('All cache was sucessfully cleared!');
+  } else {
+    res.send('Something went wrong!');
+  }
 });
 
 router.get('/clear-cache/:slug', async (req, res, next) => {
@@ -15,9 +20,9 @@ router.get('/clear-cache/:slug', async (req, res, next) => {
   const status = await redisClient.del(slug);
 
   if (status === 1) {
-    res.send(`${slug} has been deleted from cache!`);
+    res.send(`${slug} successfully deleted from cache :)`);
   } else {
-    res.send(`${slug} was not found in cache.`);
+    res.send(`${slug} was not found in cache :(`);
   }
 });
 

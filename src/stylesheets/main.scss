@@ -1,6 +1,5 @@
-$spacer: 0.9375rem;
-$small-up: (min-width: 768px);
-$medium-up: (min-width: 1170px);
+@import './variables';
+@import './mixins';
 
 * {
   box-sizing: border-box;
