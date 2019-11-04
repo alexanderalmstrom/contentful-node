@@ -1,11 +1,15 @@
 # Contentful Node
 
-Add Contentful space id, access token and home id to `.env`. See example variables in `.env.example`
-
 Requirements:
 
-- Redis (installed locally or on a remote server)
-- Node
+- Node and Yarn installed.
+- Contentful CLI installed globally (for importing Content model).
+- A Contentful space.
+- Redis (installed locally or on a remote server).
+
+1. Add Contentful space id, access token and home id to `.env`. See example variables in `.env.example`
+
+2. Import `contentful-export.json` with Contentful CLI. See Contentful docs for instructions.
 
 Install dependencies
 
@@ -15,9 +19,9 @@ yarn install
 
 Configure Redis
 
-Add your REDIS_URL to .env
+Add your local or remote `REDIS_URL` to `.env`
 
-You can also run Redis locally in a separate terminal window. Install redis with `brew install redis`. Then start with `redis-server`.
+You can run Redis locally in a separate terminal window. Install redis with `brew install redis` and start server with `redis-server`. The url will be `//localhost:6379`
 
 Run developemnt server
 
