@@ -1,4 +1,5 @@
 const { BLOCKS, INLINES } = require('@contentful/rich-text-types');
+const marked = require('marked');
 
 const entry = ({ sys, fields, inline }) => {
   const {
@@ -17,13 +18,26 @@ const entry = ({ sys, fields, inline }) => {
   }
 }
 
-const column = ({ text, inline }) => { 
-  const className = inline ? 'column__inline' : 'column__block';
-  
+const column = ({ text, size, collapse, align, inline }) => { 
+  const blockClass = inline ? 'column__inline' : 'column__block';
+  const sizeClass = size ? `col-${size}` : 'col-12';
+  const collapseClass = collapse ? 'collapse' : '';
+  const alignClass = align ? align.toLowerCase() : '';
+
+  const blockClassName = [blockClass, collapseClass].join(' ');
+  const inlineClassName = inline ? [
+    blockClass,
+    sizeClass,
+    alignClass,
+    collapseClass
+  ].join(' ') : [sizeClass].join(' ');
+
   return `
-    <div class="${className}">
-      ${text}
-    </div>
+    ${inline ? '' : `<div class="container ${blockClassName}">`}
+      <div class="${inlineClassName}">
+        ${marked(text)}
+      </div>
+    ${inline ? '' : '</div>'}
   `;
 }
 

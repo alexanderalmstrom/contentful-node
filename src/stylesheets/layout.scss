@@ -1,0 +1,22 @@
+@import 'variables';
+@import 'mixins';
+
+#header {
+  padding-top: $spacer * 2;
+  padding-bottom: $spacer * 2;
+  padding-left: $spacer;
+  padding-right: $spacer;
+
+  @include media(lg) {
+    padding-left: $spacer * 2;
+    padding-right: $spacer * 2;
+  }
+}
+
+#main {}
+
+.logo {
+  font-size: 1rem;
+  color: #000;
+  text-decoration: none;
+}

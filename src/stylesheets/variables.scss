@@ -1,3 +1,9 @@
 $spacer: 0.9375rem;
-$small-up: (min-width: 768px);
-$medium-up: (min-width: 1170px);
+
+$grid-width: 1200px;
+$grid-columns: 12;
+$grid-gutter: $spacer * 2;
+
+$breakpoint-sm: 768px;
+$breakpoint-md: 992px;
+$breakpoint-lg: 1170px;

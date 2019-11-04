@@ -1,0 +1,84 @@
+@import 'variables';
+@import 'mixins';
+
+.post__header {
+  @include container;
+  justify-content: center;
+  padding-top: $spacer * 2;
+  padding-bottom: $spacer * 2;
+
+  @include media(sm) {
+    margin-top: $spacer * 4;
+    margin-bottom: $spacer * 4;
+  }
+}
+
+.post__content {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: $spacer * 4;
+}
+
+.post__block {
+  display: flex;
+}
+
+.post__inline {
+  display: inline-flex;
+}
+
+.column__block {
+  justify-content: center;
+  margin-top: $spacer * 2;
+  margin-bottom: $spacer * 2;
+
+  @include media(sm) {
+    margin-top: $spacer * 4;
+    margin-bottom: $spacer * 4;
+  }
+}
+
+.column__block.collapse {
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 100%;
+
+  [class*="col"] {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.column__inline {
+  display: inline-flex;
+  flex-direction: column;
+  margin-top: $spacer * 2;
+  margin-bottom: $spacer * 2;
+
+  @include media(sm) {
+    margin-top: $spacer * 4;
+    margin-bottom: $spacer * 4;
+  }
+}
+
+.column__inline.top {
+  align-self: flex-start;
+}
+
+.column__inline.center {
+  align-self: center;
+}
+
+.column__inline.bottom {
+  align-self: flex-end;
+}
+
+.column__inline.collapse {
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+}
