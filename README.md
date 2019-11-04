@@ -23,7 +23,7 @@ Add your local or remote `REDIS_URL` to `.env`
 
 You can run Redis locally in a separate terminal window. Install redis with `brew install redis` and start server with `redis-server`. The url will be `//localhost:6379`
 
-Run developemnt server
+Run development server
 
 ```bash
 yarn run start
