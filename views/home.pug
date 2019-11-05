@@ -13,6 +13,6 @@ block content
           .post-item
             a.post-item__link(href='/post/' + post.fields.slug)
               - const { title, file: { url } } = post.fields.image.fields
-              +img(url, title, ['w=570'])(class="post-item__image")
+              +image({ url, title, params: ['w=570'] })(class="post-item__image")
               .post-item__content
                 h2.post-item__title= post.fields.name

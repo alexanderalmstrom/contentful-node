@@ -1,9 +1,10 @@
-mixin img(src, alt, params)
+mixin image({ url, title, params })
+  - params = params || [] 
   - const defaults = ['q=70'];
-  - const webpSrc = src + '?' + ['fm=webp'].concat(defaults, params).join('&')
-  - const jpgSrc = src + '?' + ['fm=jpg'].concat(defaults, params).join('&')
+  - const webpSrc = url + '?' + ['fm=webp'].concat(defaults, params).join('&')
+  - const jpgSrc = url + '?' + ['fm=jpg'].concat(defaults, params).join('&')
 
   picture(class!=attributes.class)
     source(type="image/webp" srcset=webpSrc)
     source(type="image/jpeg" srcset=jpgSrc)
-    img(src=jpgSrc alt=alt loading="lazy")
+    img(src=jpgSrc alt=title loading="lazy")
