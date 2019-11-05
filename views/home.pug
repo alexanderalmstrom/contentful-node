@@ -12,6 +12,7 @@ block content
         each post in posts
           .post-item
             a.post-item__link(href='/post/' + post.fields.slug)
-              +img(post.fields.image.fields.file.url, post.fields.image.fields.title, ['w=570'])(class="post-item__image")
+              - const { title, file: { url } } = post.fields.image.fields
+              +img(url, title, ['w=570'])(class="post-item__image")
               .post-item__content
                 h2.post-item__title= post.fields.name

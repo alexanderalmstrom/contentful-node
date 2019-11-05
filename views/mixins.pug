@@ -1,7 +1,7 @@
 mixin img(src, alt, params)
-  - var defaults = ['q=70'];
-  - var webpSrc = src + '?' + ['fm=webp'].concat(defaults, params).join('&')
-  - var jpgSrc = src + '?' + ['fm=jpg'].concat(defaults, params).join('&')
+  - const defaults = ['q=70'];
+  - const webpSrc = src + '?' + ['fm=webp'].concat(defaults, params).join('&')
+  - const jpgSrc = src + '?' + ['fm=jpg'].concat(defaults, params).join('&')
 
   picture(class!=attributes.class)
     source(type="image/webp" srcset=webpSrc)
