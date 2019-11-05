@@ -65,10 +65,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', page, post, cache);
 
-app.use((err, req, res, next) => {
-  res.status(500).render('404', {
-    error: err
-  });
+app.use((error, req, res, next) => {
+  res.status(500).render('404', { error });
 });
 
 app.listen(PORT, HOST, () => {

@@ -1,6 +1,6 @@
 const express = require('express');
 
-const contentful = require('../services/contentful');
+const { contentfulClient } = require('../services/contentful');
 
 const router = express.Router();
 
@@ -13,8 +13,8 @@ router.get('/', (req, res) => {
   }
 
   Promise.all([
-    contentful.getEntry(CONTENTFUL_HOME_ID),
-    contentful.getEntries(postsQuery)]
+    contentfulClient.getEntry(CONTENTFUL_HOME_ID),
+    contentfulClient.getEntries(postsQuery)]
   )
     .then(([page, { items }]) => {
       res.render('home', { page, posts: items });
