@@ -15,6 +15,7 @@ const { page, post, cache } = require('./routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const HOST = '0.0.0.0';
 
 app.set('views', path.join(__dirname, app.get('env') == 'production' ? 'public' : 'views'));
 app.set('view engine', 'pug');
@@ -70,4 +71,6 @@ app.use((err, req, res, next) => {
   });
 });
 
-app.listen(PORT, () => console.log(`Listening on port ${PORT}`));
+app.listen(PORT, HOST, () => {
+  console.log(`Server running at http://${HOST}:${PORT}/`);
+});
