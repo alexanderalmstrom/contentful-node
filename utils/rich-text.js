@@ -61,7 +61,19 @@ const asset = ({ fields }) => {
     }
   } = fields;
 
-  return `<img src="${url}?w=1680&q=70&fm=jpg" alt=${title} />`;
+  const defaults = ['q=70'];
+  const params = ['w=1680'];
+
+  const webpSrc = url + '?' + ['fm=webp'].concat(defaults, params).join('&');
+  const jpgSrc = url + '?' + ['fm=jpg'].concat(defaults, params).join('&');
+
+  return `
+    <picture class="post__image">
+      <source type="image/webp" srcset="${webpSrc}">
+      <source type="image/jpeg" srcset="${jpgSrc}">
+      <img src="${jpgSrc}" alt="${title}" loading="lazy">
+    </picture>
+  `;
 }
 
 const richTextOptions = {
