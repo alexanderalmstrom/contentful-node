@@ -6,9 +6,9 @@ const cache = async (key, promise) => {
   if (value) {
     return JSON.parse(value);
   } else {
-    const payload = await Promise.resolve(promise).then(payload => payload);
-    redisClient.set(key, JSON.stringify(payload));
-    return payload;
+    const data = await Promise.resolve(promise).then(payload => payload);
+    redisClient.set(key, JSON.stringify(data));
+    return data;
   }
 }
 
