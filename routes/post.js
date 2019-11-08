@@ -1,6 +1,5 @@
 const express = require('express');
 const { documentToHtmlString } = require('@contentful/rich-text-html-renderer');
-
 const { contentfulClient } = require('../services/contentful');
 const { cache, richTextOptions } = require('../utils');
 

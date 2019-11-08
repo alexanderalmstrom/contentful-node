@@ -4,13 +4,8 @@
 .post__header {
   @include container;
   justify-content: center;
-  padding-top: $spacer * 2;
-  padding-bottom: $spacer * 2;
-
-  @include media(sm) {
-    margin-top: $spacer * 4;
-    margin-bottom: $spacer * 4;
-  }
+  margin-top: $spacer * 4;
+  margin-bottom: $spacer * 4;
 }
 
 .post__content {
@@ -18,7 +13,6 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
-  margin-bottom: $spacer * 4;
 }
 
 .post__block {
@@ -31,13 +25,8 @@
 
 .column__block {
   justify-content: center;
-  margin-top: $spacer * 2;
-  margin-bottom: $spacer * 2;
-
-  @include media(sm) {
-    margin-top: $spacer * 4;
-    margin-bottom: $spacer * 4;
-  }
+  margin-top: $spacer * 4;
+  margin-bottom: $spacer * 4;
 }
 
 .column__block.collapse {
@@ -56,13 +45,8 @@
 .column__inline {
   display: inline-flex;
   flex-direction: column;
-  margin-top: $spacer * 2;
-  margin-bottom: $spacer * 2;
-
-  @include media(sm) {
-    margin-top: $spacer * 4;
-    margin-bottom: $spacer * 4;
-  }
+  margin-top: $spacer * 4;
+  margin-bottom: $spacer * 4;
 }
 
 .column__inline.top {

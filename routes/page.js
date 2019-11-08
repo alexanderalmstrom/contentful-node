@@ -1,5 +1,4 @@
 const express = require('express');
-
 const { contentfulClient } = require('../services/contentful');
 
 const router = express.Router();
